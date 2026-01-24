@@ -1292,7 +1292,7 @@ pub const Dictionary = opaque {
         APPEND: bool = false,
         /// Allow to store several equal keys in the dictionary.
         MULTIKEY: bool = false,
-        unused: @Int(.unsigned, @bitSizeOf(c_int) - 7) = 0,
+        unused: @Type(.{ .int = .{ .signedness = .unsigned, .bits = @bitSizeOf(c_int) - 7 } }) = 0,
     };
 
     pub const Entry = extern struct {
@@ -3712,7 +3712,7 @@ pub const sws = struct {
         BITEXACT: bool = false,
         unused20: u3 = 0,
         ERROR_DIFFUSION: bool = false,
-        unused24: @Int(.unsigned, @bitSizeOf(c_int) - 24) = 0,
+        unused24: @Type(.{ .int = .{ .signedness = .unsigned, .bits = @bitSizeOf(c_int) - 24 } }) = 0,
     };
 
     pub const Vector = extern struct {
