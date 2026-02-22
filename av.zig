@@ -201,6 +201,22 @@ pub extern fn sws_scale(c: *sws.Context, srcSlice: [*]const [*]const u8, srcStri
 /// Prefer `sws.Context.scale_frame`.
 pub extern fn sws_scale_frame(c: *sws.Context, dst: *Frame, src: *const Frame) c_int;
 
+// Prefer `nick_tmp_image_copy_to_buffer`
+pub extern fn av_image_copy_to_buffer(dst: [*c]u8, dstSize: c_int, srcData: [*c]const [*c]const u8, srcLinesize: [*c]const c_int, pixFmt: PixelFormat, width: c_int, height: c_int, alignn: c_int) c_int;
+// Prefer `nick_tmp_image_get_buffer_size`
+pub extern fn av_image_get_buffer_size(pixFmt: PixelFormat, width: c_int, height: c_int, alignn: c_int) c_int;
+
+// pub fn scale(c: *Context, srcSlice: [*]const [*]const u8, srcStride: [*]const c_int, srcSliceY: c_int, srcSliceH: c_int, dst: [*]const [*]u8, dstStride: [*]const c_int) Error!void {
+//     _ = try wrap(sws_scale(c, srcSlice, srcStride, srcSliceY, srcSliceH, dst, dstStride));
+// }
+pub fn nick_tmp_image_copy_to_buffer(dst: [*]u8, dstSize: c_int, srcData: [*]const [*]const u8, srcLinesize: [*]const c_int, pixFmt: PixelFormat, width: c_int, height: c_int, alignn: c_int) Error!void {
+    _ = try wrap(av_image_copy_to_buffer(dst, dstSize, srcData, srcLinesize, pixFmt, width, height, alignn));
+}
+
+pub fn nick_tmp_image_get_buffer_size(pixFmt: PixelFormat, width: c_int, height: c_int, alignn: c_int) Error!c_uint {
+    return try wrap(av_image_get_buffer_size(pixFmt, width, height, alignn));
+}
+
 /// Function pointer to a function to perform the transform.
 ///
 /// Using a different context than the one allocated during `av_tx_init` is not
